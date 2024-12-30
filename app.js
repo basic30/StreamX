@@ -1,74 +1,30 @@
-<script>
-  // Spotify API Credentials (Replace these with your own)
-  const CLIENT_ID = '98aea1e75779452b829e436b0a676fe0'; // Replace with your Client ID
-  const CLIENT_SECRET = 'fdb53d0c6d734074867e43966a0bbe81'; // Replace with your Client Secret
+const API_KEY = 'AIzaSyA7k6glBajX2aK8yx49FhqDL43VesRIG64'; // Your YouTube API Key
+const searchBox = document.getElementById('search-box');
+const searchBtn = document.getElementById('search-btn');
+const videoContainer = document.getElementById('video-container');
 
-  // API Endpoints
-  const TOKEN_URL = 'https://accounts.spotify.com/api/token';
-  const FEATURED_PLAYLISTS_URL = 'https://api.spotify.com/v1/browse/featured-playlists';
-
-  // Fetch Access Token
-  async function getAccessToken() {
-    const response = await fetch(TOKEN_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${btoa(CLIENT_ID + ':' + CLIENT_SECRET)}`,
-      },
-      body: 'grant_type=client_credentials',
-    });
-
+async function fetchVideos(query) {
+    const response = await fetch(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${query}&maxResults=10&key=${API_KEY}`
+    );
     const data = await response.json();
-    return data.access_token;
-  }
+    displayVideos(data.items);
+}
 
-  // Fetch Featured Playlists
-  async function fetchFeaturedPlaylists() {
-    const token = await getAccessToken();
-    const response = await fetch(FEATURED_PLAYLISTS_URL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+function displayVideos(videos) {
+    videoContainer.innerHTML = '';
+    videos.forEach(video => {
+        const videoElement = document.createElement('div');
+        videoElement.classList.add('video');
+        videoElement.innerHTML = `
+            <iframe src="https://www.youtube.com/embed/${video.id.videoId}" allowfullscreen></iframe>
+            <h3>${video.snippet.title}</h3>
+        `;
+        videoContainer.appendChild(videoElement);
     });
+}
 
-    const data = await response.json();
-    displayPlaylists(data.playlists.items);
-  }
-
-  // Display Playlists
-  function displayPlaylists(playlists) {
-    const heroSection = document.querySelector('.hero-section');
-
-    const playlistsSection = document.createElement('section');
-    playlistsSection.className = 'playlists-section';
-
-    const playlistsHeading = document.createElement('h2');
-    playlistsHeading.textContent = 'Featured Playlists';
-    playlistsSection.appendChild(playlistsHeading);
-
-    const playlistsContainer = document.createElement('div');
-    playlistsContainer.className = 'playlists-container';
-
-    playlists.forEach((playlist) => {
-      const playlistCard = document.createElement('div');
-      playlistCard.className = 'playlist-card';
-
-      const playlistImage = document.createElement('img');
-      playlistImage.src = playlist.images[0].url;
-      playlistImage.alt = playlist.name;
-
-      const playlistName = document.createElement('h3');
-      playlistName.textContent = playlist.name;
-
-      playlistCard.appendChild(playlistImage);
-      playlistCard.appendChild(playlistName);
-      playlistsContainer.appendChild(playlistCard);
-    });
-
-    playlistsSection.appendChild(playlistsContainer);
-    heroSection.insertAdjacentElement('afterend', playlistsSection);
-  }
-
-  // Fetch playlists on page load
-  window.onload = fetchFeaturedPlaylists;
-</script>
+searchBtn.addEventListener('click', () => {
+    const query = searchBox.value;
+    if (query) fetchVideos(query);
+});
