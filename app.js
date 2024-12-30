@@ -10,10 +10,11 @@ mainPlayer.id = 'main-player';
 document.body.appendChild(mainPlayer); // Add the main player at the end of the body
 
 let currentVideoId = null; // Store the current video ID for minimizing
+let lastScrollY = 0; // Track the last scroll position
 
 async function fetchVideos(query) {
     const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${query}&maxResults=5&key=${API_KEY}`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${query}&maxResults=10&key=${API_KEY}`
     );
     const data = await response.json();
     displayVideos(data.items);
@@ -44,18 +45,21 @@ function playVideo(videoId, title) {
         <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allowfullscreen></iframe>
         <h3>${title}</h3>
     `;
+    mainPlayer.classList.remove('minimized'); // Reset to full state when a new video is played
 }
 
-// Handle scrolling behavior
+// Handle scrolling behavior to hide/show the header and minimize the player
 window.addEventListener('scroll', () => {
-    if (window.scrollY > 200 && currentVideoId) {
-        // Minimize the video player
-        mainPlayer.classList.add('minimized');
-        header.style.display = 'flex'; // Ensure the header remains visible
-    } else if (window.scrollY <= 200) {
-        // Restore the main player
+    if (window.scrollY > lastScrollY) {
+        // Scrolling down - hide the header and minimize the player
+        header.style.top = '-100px'; // Move header out of view
+        mainPlayer.classList.add('minimized'); // Minimize the main player
+    } else {
+        // Scrolling up - show the header and restore the player
+        header.style.top = '0';
         mainPlayer.classList.remove('minimized');
     }
+    lastScrollY = window.scrollY;
 });
 
 // Search button click event
