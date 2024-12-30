@@ -6,20 +6,6 @@ body {
     color: #fff;
 }
 
-header {
-    display: flex;
-    flex-direction: column; /* Arrange items vertically */
-    align-items: center; /* Center horizontally */
-    justify-content: center; /* Center vertically */
-    padding: 20px;
-    background: #1db954;
-    position: sticky; /* Ensure header stays at the top */
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    text-align: center; /* Ensure text alignment in the center */
-}
-
 #search-box {
     width: 300px;
     padding: 10px;
@@ -49,39 +35,53 @@ main {
 }
 
 #main-player {
-    width: 90%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 600px; /* Default size for main state */
     margin: 20px auto;
-    display: none; /* Initially hide the main player */
+    display: none; /* Initially hidden */
     background: #333;
     padding: 10px;
     border-radius: 10px;
     text-align: center;
-    position: fixed; /* Allow minimizing functionality */
-    top: 70px; /* Place below the header */
+    position: fixed; /* Fixed positioning for smooth behavior */
+    top: 70px; /* Default position below the header */
     left: 50%;
     transform: translateX(-50%);
     z-index: 999;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out; /* Smooth animation for transitions */
 }
 
 #main-player.minimized {
-    width: 250px;
-    height: 140px;
-    top: auto;
-    bottom: 20px;
-    left: 20px;
+    width: 250px; /* Reduced width for minimized state */
+    height: 140px; /* Reduced height for minimized state */
+    top: auto; /* Remove top position */
+    bottom: 20px; /* Position at the bottom of the screen */
+    left: 20px; /* Position at the left of the screen */
     transform: none;
     border-radius: 10px;
 }
 
 #main-player iframe {
     width: 100%;
-    height: 300px;
+    height: 100%;
     border: none;
     border-radius: 10px;
 }
 
+header {
+    display: flex;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    padding: 20px;
+    background: #1db954;
+    position: fixed; /* Keep the header fixed */
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    text-align: center;
+    transition: top 0.3s ease-in-out; /* Smooth hide/show animation */
+}
 #video-container {
     display: flex;
     flex-wrap: wrap;
