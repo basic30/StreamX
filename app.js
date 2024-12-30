@@ -3,18 +3,19 @@ const searchBox = document.getElementById('search-box');
 const searchBtn = document.getElementById('search-btn');
 const videoContainer = document.getElementById('video-container');
 const header = document.querySelector('header');
-const mainPlayer = document.createElement('div'); // Create main player dynamically
-mainPlayer.id = 'main-player';
-document.body.prepend(mainPlayer); // Add main player to the top of the body
 
-let searchResults = []; // Store search results for managing the video list
+// Create main player dynamically
+const mainPlayer = document.createElement('div');
+mainPlayer.id = 'main-player';
+document.body.appendChild(mainPlayer); // Add the main player at the end of the body
+
+let currentVideoId = null; // Store the current video ID for minimizing
 
 async function fetchVideos(query) {
     const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${query}&maxResults=10&key=${API_KEY}`
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${query}&maxResults=5&key=${API_KEY}`
     );
     const data = await response.json();
-    searchResults = data.items; // Store results for managing the video list
     displayVideos(data.items);
 }
 
@@ -37,32 +38,30 @@ function displayVideos(videos) {
 }
 
 function playVideo(videoId, title) {
-    // Display the main player and hide the header
+    currentVideoId = videoId; // Store the current video ID
     mainPlayer.style.display = 'block';
     mainPlayer.innerHTML = `
         <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1" allowfullscreen></iframe>
         <h3>${title}</h3>
     `;
-
-    header.style.display = 'none'; // Hide the header when a video is clicked
-
-    // Remove the clicked video from the suggestions
-    searchResults = searchResults.filter(video => video.id.videoId !== videoId);
-    displayVideos(searchResults); // Update suggestions
 }
+
+// Handle scrolling behavior
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 200 && currentVideoId) {
+        // Minimize the video player
+        mainPlayer.classList.add('minimized');
+        header.style.display = 'flex'; // Ensure the header remains visible
+    } else if (window.scrollY <= 200) {
+        // Restore the main player
+        mainPlayer.classList.remove('minimized');
+    }
+});
 
 // Search button click event
 searchBtn.addEventListener('click', () => {
     const query = searchBox.value;
     if (query) {
-        header.style.display = 'none'; // Hide header when search begins
         fetchVideos(query);
-    }
-});
-
-// Show the header when the main player is scrolled down
-window.addEventListener('scroll', () => {
-    if (window.scrollY === 0) {
-        header.style.display = 'flex'; // Show header when scrolled to the top
     }
 });
