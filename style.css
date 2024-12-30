@@ -1,54 +1,128 @@
-/* style.css */
+/* Global Styles */
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #121212;
-  color: white;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    background-color: #121212;
 }
 
-header {
-  padding: 20px;
-  background-color: #1DB954;
-  text-align: center;
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #000000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
 }
 
-header input {
-  width: 80%;
-  padding: 10px;
-  border: none;
-  border-radius: 5px;
+.logo {
+    font-size: 24px;
+    font-weight: bold;
 }
 
-main {
-  padding: 20px;
+.nav ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
 
-#song-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+.nav ul li {
+    margin: 0 15px;
 }
 
-.song {
-  width: 150px;
-  text-align: center;
-  cursor: pointer;
+.nav ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 700;
+    transition: color 0.3s;
 }
 
-.song img {
-  width: 100%;
-  border-radius: 10px;
+.nav ul li a:hover {
+    color: #1db954;
 }
 
-#player {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
+.login-button {
+    background-color: transparent;
+    border: 1px solid #ffffff;
+    border-radius: 50px;
+    padding: 6px 16px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-#player img {
-  width: 100px;
-  border-radius: 10px;
-  margin-right: 20px;
+.login-button:hover {
+    background-color: #ffffff;
+    color: #121212;
+}
+
+/* Hero Section */
+.hero-section {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+    position: relative;
+    text-align: center;
+    padding-top: 80px;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.hero-content {
+    z-index: 2;
+    max-width: 800px;
+    color: #ffffff;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.hero-button {
+    background-color: #1db954;
+    border: none;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 32px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.hero-button:hover {
+    background-color: #1ed760;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #000000;
+    color: #b3b3b3;
+    font-size: 14px;
 }
