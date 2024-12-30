@@ -13,7 +13,7 @@ header {
     justify-content: center; /* Center vertically */
     padding: 20px;
     background: #1db954;
-    position: fixed; /* Ensure header stays at the top */
+    position: sticky; /* Ensure header stays at the top */
     top: 0;
     width: 100%;
     z-index: 1000;
@@ -45,7 +45,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 100px; /* Add margin to avoid overlap with the fixed header */
+    margin: 20px; /* Add margin to avoid overlap with the fixed header */
 }
 
 #main-player {
