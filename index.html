@@ -3,21 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify</title>
+    <title>YouTube</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>Music Explorer</h1>
-        <input type="text" id="search-box" placeholder="Search for music videos...">
-        <button id="search-btn">Search</button>
-    </header>
-    <main>
-        <div id="main-player" class="video">
-            <p>Select a video to play</p>
-        </div>
-        <div id="video-container"></div>
-    </main>
+    <div class="container">
+        <header>
+            <h1>YouTube Clone</h1>
+            <form id="search-form">
+                <input type="text" id="search-input" placeholder="Search for videos...">
+                <button type="submit">Search</button>
+            </form>
+        </header>
+        <main>
+            <div id="video-container">
+                <div id="video-player">
+                    <p>No video selected</p>
+                </div>
+                <div id="video-info">
+                    <h2 id="video-title"></h2>
+                    <p id="video-description"></p>
+                </div>
+            </div>
+            <div id="video-list"></div>
+        </main>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>
+
