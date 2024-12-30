@@ -1,47 +1,74 @@
-const clientId = '5997d407';  // Use your Jamendo API client ID
-let token = '';  // Jamendo doesn't require OAuth for basic access, but you will use the client ID in requests
+<script>
+  // Spotify API Credentials (Replace these with your own)
+  const CLIENT_ID = '98aea1e75779452b829e436b0a676fe0'; // Replace with your Client ID
+  const CLIENT_SECRET = 'fdb53d0c6d734074867e43966a0bbe81'; // Replace with your Client Secret
 
-// Search Jamendo API
-async function searchSongs(query) {
-  const result = await fetch(
-    `https://api.jamendo.com/v3.0/tracks/?client_id=${clientId}&format=json&limit=10&namesearch=${query}`,
-  );
-  const data = await result.json();
-  displaySongs(data.results);  // `results` is where tracks are located in the response
-}
+  // API Endpoints
+  const TOKEN_URL = 'https://accounts.spotify.com/api/token';
+  const FEATURED_PLAYLISTS_URL = 'https://api.spotify.com/v1/browse/featured-playlists';
 
-// Display Songs
-function displaySongs(songs) {
-  const songList = document.getElementById('song-list');
-  songList.innerHTML = '';  // Clear the current song list
-  songs.forEach((song) => {
-    const songDiv = document.createElement('div');
-    songDiv.className = 'song';
-    songDiv.innerHTML = `
-      <img src="${song.album_image}" alt="${song.name}">
-      <p>${song.name}</p>
-    `;
-    songDiv.addEventListener('click', () => playSong(song));
-    songList.appendChild(songDiv);
-  });
-}
+  // Fetch Access Token
+  async function getAccessToken() {
+    const response = await fetch(TOKEN_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${btoa(CLIENT_ID + ':' + CLIENT_SECRET)}`,
+      },
+      body: 'grant_type=client_credentials',
+    });
 
-// Play Song
-function playSong(song) {
-  document.getElementById('album-art').src = song.album_image;  // Display album art
-  document.getElementById('song-title').textContent = song.name;  // Song title
-  document.getElementById('artist-name').textContent = song.artist_name;  // Artist name
-  const audioPlayer = document.getElementById('audio-player');
-  audioPlayer.src = song.preview;  // Jamendo provides a `preview` URL for a short audio clip
-  audioPlayer.play();  // Play the song preview
-}
-
-// Event Listener for Search
-document.getElementById('search').addEventListener('input', (e) => {
-  const query = e.target.value;
-  if (query.length > 2) {  // Start search after 2 characters
-    searchSongs(query);
+    const data = await response.json();
+    return data.access_token;
   }
-});
 
-// Initialize App - Jamendo API doesn't require an authentication token, so just start the app
+  // Fetch Featured Playlists
+  async function fetchFeaturedPlaylists() {
+    const token = await getAccessToken();
+    const response = await fetch(FEATURED_PLAYLISTS_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const data = await response.json();
+    displayPlaylists(data.playlists.items);
+  }
+
+  // Display Playlists
+  function displayPlaylists(playlists) {
+    const heroSection = document.querySelector('.hero-section');
+
+    const playlistsSection = document.createElement('section');
+    playlistsSection.className = 'playlists-section';
+
+    const playlistsHeading = document.createElement('h2');
+    playlistsHeading.textContent = 'Featured Playlists';
+    playlistsSection.appendChild(playlistsHeading);
+
+    const playlistsContainer = document.createElement('div');
+    playlistsContainer.className = 'playlists-container';
+
+    playlists.forEach((playlist) => {
+      const playlistCard = document.createElement('div');
+      playlistCard.className = 'playlist-card';
+
+      const playlistImage = document.createElement('img');
+      playlistImage.src = playlist.images[0].url;
+      playlistImage.alt = playlist.name;
+
+      const playlistName = document.createElement('h3');
+      playlistName.textContent = playlist.name;
+
+      playlistCard.appendChild(playlistImage);
+      playlistCard.appendChild(playlistName);
+      playlistsContainer.appendChild(playlistCard);
+    });
+
+    playlistsSection.appendChild(playlistsContainer);
+    heroSection.insertAdjacentElement('afterend', playlistsSection);
+  }
+
+  // Fetch playlists on page load
+  window.onload = fetchFeaturedPlaylists;
+</script>
