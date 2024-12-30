@@ -3,33 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Front Page Clone</title>
+    <title>Spotify</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header">
-        <div class="logo">Spotify</div>
-        <nav class="nav">
-            <ul>
-                <li><a href="#premium">Premium</a></li>
-                <li><a href="#support">Support</a></li>
-                <li><a href="#download">Download</a></li>
-                <li><a href="#login" class="login-button">Log In</a></li>
-            </ul>
-        </nav>
+    <header>
+        <h1>Music Explorer</h1>
+        <input type="text" id="search-box" placeholder="Search for music videos...">
+        <button id="search-btn">Search</button>
     </header>
-
-    <main class="hero-section">
-        <div class="hero-content">
-            <h1>Listening is everything</h1>
-            <p>Millions of songs and podcasts. No credit card needed.</p>
-            <button class="hero-button">Get Spotify Free</button>
-        </div>
+    <main>
+        <div id="video-container"></div>
     </main>
-
-    <footer class="footer">
-        <p>© 2024 Spotify Clone</p>
-    </footer>
-   <script src="app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
