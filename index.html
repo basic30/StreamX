@@ -3,32 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Spotify Clone</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>YouTube Clone</h1>
-            <form id="search-form">
-                <input type="text" id="search-input" placeholder="Search for videos...">
-                <button type="submit">Search</button>
-            </form>
-        </header>
-        <main>
-            <div id="video-container">
-                <div id="video-player">
-                    <p>No video selected</p>
-                </div>
-                <div id="video-info">
-                    <h2 id="video-title"></h2>
-                    <p id="video-description"></p>
-                </div>
-            </div>
-            <div id="video-list"></div>
-        </main>
-    </div>
-    <script src="app.js"></script>
+    <header>
+        <h1>Spotify Clone</h1>
+        <a href="#" id="login" class="btn-spotify">Login with Spotify</a>
+    </header>
+    <main>
+        <input type="text" id="search" placeholder="Search for music..." />
+        <div id="music-list"></div>
+        <audio id="audio-player" controls>
+            <source id="audio-source" src="" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </main>
+    <script src="script.js"></script>
 </body>
 </html>
-
