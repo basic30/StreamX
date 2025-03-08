@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label class="form-label">Your Skills</label>
-            <input type="text" id="keywords" class="form-control" placeholder="E.g., Python, Web Development">
+            <input type="text" id="skills" class="form-control" placeholder="E.g., Python, Web Development">
         </div>
         <div class="mb-3">
             <label class="form-label">Your Interests</label>
@@ -50,10 +50,10 @@
 
         function getCareerAdvice() {
             let name = document.getElementById("name").value;
-            let skills = document.getElementById("keywords").value;
+            let skills = document.getElementById("skills").value;
             let interests = document.getElementById("interests").value;
 
-            if (name === "" || keywords === "" || interests === "") {
+            if (name === "" || skills === "" || interests === "") {
                 alert("Please fill all fields.");
                 return;
             }
@@ -64,13 +64,13 @@
             fetch(BACKEND_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: `skills=${keywords}&interests=${interests}`
+                body: `skills=${skills}&interests=${interests}`
             })
             .then(response => response.json())
             .then(data => {
                 chatbox.innerHTML += `<p><strong>AI:</strong> ${data.career_advice}</p>`;
                 chatbox.innerHTML += `<p><strong>AI:</strong> Do you have any follow-up questions?</p>`;
-                loadLinkedInJobs(keywords);
+                loadLinkedInJobs(skills);
             })
             .catch(error => console.error('Error:', error));
         }
@@ -101,7 +101,7 @@
             let jobList = document.getElementById("job-list");
             jobList.innerHTML = "<p>Fetching job recommendations...</p>";
 
-            fetch(`${LINKEDIN_URL}?skills=${keywords}`)
+            fetch(`${LINKEDIN_URL}?skills=${skills}`)
             .then(response => response.json())
             .then(data => {
                 jobList.innerHTML = "";
