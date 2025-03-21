@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Education - Class Routine Generator</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="logo.png" alt="Smart Education Logo" class="logo">
+                <h1>Smart Education</h1>
+            </div>
+            <div class="theme-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider round"></span>
+                </label>
+                <span class="toggle-label">Dark Mode</span>
+            </div>
+        </header>
+
+        <main>
+            <section class="intro">
+                <h2>Class Routine Generator</h2>
+                <p>Enter the required information below to generate an optimized class routine.</p>
+            </section>
+
+            <section class="input-form">
+                <div class="form-group">
+                    <label for="startTime">Class Start Time:</label>
+                    <input type="time" id="startTime" value="10:00">
+                </div>
+
+                <div class="form-group">
+                    <label for="classDuration">Class Duration (minutes):</label>
+                    <input type="number" id="classDuration" min="30" max="120" value="45">
+                </div>
+
+                <div class="form-group">
+                    <label for="maxPeriods">Max Periods Per Day:</label>
+                    <input type="number" id="maxPeriods" min="4" max="10" value="6">
+                </div>
+
+                <div class="form-group">
+                    <label for="minPeriods">Min Periods Per Day:</label>
+                    <input type="number" id="minPeriods" min="3" max="8" value="4">
+                </div>
+
+                <div class="form-group">
+                    <label for="tiffinDuration">Tiffin Time Duration (minutes):</label>
+                    <input type="number" id="tiffinDuration" min="15" max="60" value="30">
+                </div>
+
+                <div class="form-group">
+                    <label for="tiffinAfter">Tiffin After Period:</label>
+                    <input type="number" id="tiffinAfter" min="2" max="8" value="3">
+                </div>
+
+                <div class="form-group subjects-container">
+                    <label>Subjects and Faculty:</label>
+                    <div id="subjectsWrapper">
+                        <div class="subject-entry">
+                            <input type="text" placeholder="Subject Name" class="subject-name">
+                            <div class="faculty-list">
+                                <input type="text" placeholder="Faculty Name" class="faculty-name">
+                                <button type="button" class="add-faculty-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" id="addSubjectBtn">Add Another Subject</button>
+                </div>
+
+                <div class="form-group days-selection">
+                    <label>Days in Routine:</label>
+                    <div class="days-checkboxes">
+                        <label><input type="checkbox" class="day-checkbox" value="Monday" checked> Monday</label>
+                        <label><input type="checkbox" class="day-checkbox" value="Tuesday" checked> Tuesday</label>
+                        <label><input type="checkbox" class="day-checkbox" value="Wednesday" checked> Wednesday</label>
+                        <label><input type="checkbox" class="day-checkbox" value="Thursday" checked> Thursday</label>
+                        <label><input type="checkbox" class="day-checkbox" value="Friday" checked> Friday</label>
+                        <label><input type="checkbox" class="day-checkbox" value="Saturday"> Saturday</label>
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="button" id="generateBtn">Generate Routine</button>
+                </div>
+            </section>
+
+            <section class="result-section" id="resultSection">
+                <div class="result-header">
+                    <h2>Generated Class Routine</h2>
+                    <button id="exportPdfBtn" class="export-btn">Export as PDF</button>
+                </div>
+                <div class="routine-table-container">
+                    <table id="routineTable" class="routine-table">
+                        <!-- Table will be generated by JavaScript -->
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>Smart Education &copy; 2025 | Developed for Hackathon</p>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
